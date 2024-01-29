@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="assets/css/styles.css" rel="stylesheet">
+    </head>
+    <body>
+    <section class="calculator">
+        <div class="calculator-body">
+            <div class="display">
+                <div class="display-body">
+                    <div class="display-body__text">0</div>
+                </div>
+            </div>
+            <div class="keyboard">
+                <div class="keyboard-numbers">
+                    <div class="row-4">
+                        <div class="reset" onclick="resetCalculator()">R</div>
+                        <div class="slash" onclick="operatorClicked('/')">/</div>
+                        <div class="multiply" onclick="operatorClicked('*')">*</div>
+                    </div>
+                    <div class="row-3">
+                        <div class="seven" onclick="numberClicked('7')" >7</div>
+                        <div class="eight" onclick="numberClicked('8')">8</div>
+                        <div class="nine" onclick="numberClicked('9')">9</div>
+                    </div>
+                    <div class="row-2">
+                        <div class="four" onclick="numberClicked('4')">4</div>
+                        <div class="five" onclick="numberClicked('5')">5</div>
+                        <div class="six" onclick="numberClicked('6')">6</div>
+                    </div>
+                    <div class="row-1">
+                        <div class="one" onclick="numberClicked('1')">1</div>
+                        <div class="two" onclick="numberClicked('2')">2</div>
+                        <div class="three" onclick="numberClicked('3')">3</div>
+                    </div>
+                    <div class="row-0">
+                        <div class="zero" onclick="numberClicked('0')">0</div>
+                        <div class="dot" onclick="deleteClicked()">Del</div>
+                    </div>
+                </div>
+                <div class="keyboard-op">
+                    <div class="row-4">
+                        <div class="minus" onclick="operatorClicked('-')">-</div>
+                    </div>
+                    <div class="row-3-2">
+                        <div class="plus" onclick="operatorClicked('+')">+</div>
+                    </div>
+                    <div class="row-1-0">
+                        <div class="equal" onclick="equalsClicked()">=</div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </section>
+    <script src="assets/js/main.js"></script>
+    </body>
+</html>
