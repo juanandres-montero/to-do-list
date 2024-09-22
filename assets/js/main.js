@@ -1,71 +1,68 @@
-// Get the display element
-const display = document.querySelector('.display-body__text');
-
-let firstOperand = '';
-let secondOperand = '';
-let currentOperator = null;
-
-function numberClicked(number) {
-    if (currentOperator) {
-        secondOperand += number;
+function updateDateTime() {
+    const dateDisplay = document.getElementById('date-display');
+    const greeting = document.getElementById('greeting');
+    const dayNightIndicator = document.getElementById('day-night-indicator');
+    const now = new Date();
+    
+    // Format date in Spanish
+    const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+    dateDisplay.textContent = now.toLocaleDateString('es-ES', options);
+    
+    const hours = now.getHours();
+    if (hours >= 5 && hours < 12) {
+        greeting.textContent = "Buenos días";
+        dayNightIndicator.textContent = '☀️';
+    } else if (hours >= 12 && hours < 20) {
+        greeting.textContent = "Buenas tardes";
+        dayNightIndicator.textContent = '☀️';
+    } else if (hours >= 20 || hours < 1) {
+        greeting.textContent = "Buenas noches";
+        dayNightIndicator.textContent = '🌙';
     } else {
-        firstOperand += number;
+        greeting.textContent = "Feliz madrugada";
+        dayNightIndicator.textContent = '🌙';
     }
-    display.textContent = firstOperand + (currentOperator || '') + secondOperand;
 }
 
-function operatorClicked(operator) {
-    currentOperator = operator;
-    display.textContent = firstOperand + currentOperator;
-}
+updateDateTime();
+setInterval(updateDateTime, 60000); // Update every minute
 
-function equalsClicked() {
-    let result;
-    if (currentOperator === '+') {
-        result = Number(firstOperand) + Number(secondOperand);
-    } else if (currentOperator === '-') {
-        result = Number(firstOperand) - Number(secondOperand);
-    } else if (currentOperator === '*') {
-        result = Number(firstOperand) * Number(secondOperand);
-    } else if (currentOperator === '/') {
-        result = Number(firstOperand) / Number(secondOperand);
+// Task list functionality
+const taskInput = document.getElementById('task-input');
+const taskList = document.getElementById('task-list');
+
+taskInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter' && this.value.trim() !== '') {
+        addTask(this.value.trim());
+        this.value = '';
     }
-    result = Number(result.toFixed(4));
-    display.textContent = result;
-    firstOperand = result;
-    secondOperand = '';
-    currentOperator = null;
-}
-
-function resetCalculator() {
-    firstOperand = '';
-    secondOperand = '';
-    currentOperator = null;
-    display.textContent = '';
-}
-
-function deleteClicked() {
-    if (secondOperand !== '') {
-        secondOperand = secondOperand.slice(0, -1);
-    } else if (currentOperator) {
-        currentOperator = null;
-    } else {
-        firstOperand = firstOperand.slice(0, -1);
-    }
-    display.textContent = firstOperand + (currentOperator || '') + secondOperand;
-}
-
-// Event listeners
-document.querySelectorAll('.number').forEach(button => {
-    button.addEventListener('click', () => numberClicked(button.textContent));
 });
 
-document.querySelectorAll('.operator').forEach(button => {
-    button.addEventListener('click', () => operatorClicked(button.textContent));
-});
-
-document.querySelector('.equals').addEventListener('click', equalsClicked);
-
-document.querySelector('.reset').addEventListener('click', resetCalculator);
-
-document.querySelector('.delete').addEventListener('click', deleteClicked);
+function addTask(taskText) {
+    const li = document.createElement('li');
+    li.className = 'task-item';
+    
+    const completeBtn = document.createElement('button');
+    completeBtn.textContent = '✓';
+    completeBtn.className = 'complete-btn';
+    completeBtn.onclick = function() {
+        li.classList.toggle('completed');
+    };
+    
+    const taskSpan = document.createElement('span');
+    taskSpan.textContent = taskText;
+    taskSpan.className = 'task-text';
+    
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '×';
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.onclick = function() {
+        li.remove();
+    };
+    
+    li.appendChild(completeBtn);
+    li.appendChild(taskSpan);
+    li.appendChild(deleteBtn);
+    
+    taskList.appendChild(li);
+}
